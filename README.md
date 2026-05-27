@@ -2,6 +2,8 @@
 
 Java 客户端 SDK，用于对接纷析云财务业务系统 Open API。
 
+GitHub: [https://github.com/btboys/fenxi365-api-client](https://github.com/btboys/fenxi365-api-client)
+
 ## 安装
 
 ### Gradle
@@ -33,7 +35,7 @@ if (result.isSuccess()) {
     }
 }
 
-// 创建凭证
+// 创建凭证（链式指定账套）
 VoucherDto voucher = new VoucherDto();
 voucher.setWord("记");
 voucher.setCode(1);
@@ -42,13 +44,21 @@ voucher.setDetails(Arrays.asList(
     new VoucherDetailsDto() {{ setSummary("办公用品"); setSubjectId(1001L); setDebitAmount(new BigDecimal("500")); }},
     new VoucherDetailsDto() {{ setSummary("办公用品"); setSubjectId(2001L); setCreditAmount(new BigDecimal("500")); }}
 ));
-JsonResult<VoucherDto> created = client.voucher().create(voucher, 123L);
+JsonResult<VoucherDto> created = client.voucher().withAccountSetId(123L).create(voucher);
+
+// 线程级别账套（连续调用无需重复设置）
+client.setAccountSetId(123L);
+client.voucher().list(query);
+client.customer().list(1, 20);
+client.clearAccountSetId();
 
 // 批量推送业务数据
-List<TripartiteDataDto> dataList = Arrays.asList(
-    new TripartiteDataDto() {{ setPrimaryValue("INV-001"); setDataValue(new Gson().toJsonTree(Map.of("amount", 1000))); }}
+List<TripartiteDataDto> dataList = List.of(
+        new TripartiteDataDto() {{
+            setPrimaryValue("INV-001");
+        }}
 );
-client.tripartite().batchPush("SALE_ORDER", dataList, "BATCH-001", 123L);
+client.tripartite().withAccountSetId(123L).batchPush("SALE_ORDER", dataList, "BATCH-001");
 ```
 
 ## API 列表

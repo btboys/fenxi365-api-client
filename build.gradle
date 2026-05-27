@@ -27,6 +27,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+tasks.named('jar') {
+    manifest {
+        attributes('Automatic-Module-Name': 'com.fenxi365.openapi.client')
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
@@ -34,6 +40,7 @@ tasks.named('test') {
 tasks.named('javadoc') {
     options.encoding = 'UTF-8'
     options.charSet = 'UTF-8'
+    options.addBooleanOption('Xdoclint:none', true)
 }
 
 publishing {
@@ -43,23 +50,31 @@ publishing {
             pom {
                 name = 'Fenxi365 API Client'
                 description = 'Java client SDK for Fenxi365 Financial Business System API'
-                url = 'https://www.fenxi365.com'
+                url = 'https://github.com/btboys/fenxi365-api-client'
+                inceptionYear = '2026'
                 licenses {
                     license {
-                        name = 'Apache License 2.0'
-                        url = 'https://www.apache.org/licenses/LICENSE-2.0'
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                        distribution = "repo"
                     }
                 }
                 developers {
                     developer {
-                        name = 'Fenxi365'
-                        email = 'dev@fenxi365.com'
+                        id = 'btboys'
+                        name = 'btboys'
+                        email = 'geek@gson.cn'
+                        url = 'https://github.com/btboys'
                     }
                 }
                 scm {
-                    connection = 'scm:git:git@github.com:fenxi365/fenxi365-api-client.git'
-                    developerConnection = 'scm:git:git@github.com:fenxi365/fenxi365-api-client.git'
-                    url = 'https://github.com/fenxi365/fenxi365-api-client'
+                    connection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
+                    developerConnection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
+                    url = 'https://github.com/btboys/fenxi365-api-client'
+                }
+                issueManagement {
+                    system = 'GitHub Issues'
+                    url = 'https://github.com/btboys/fenxi365-api-client/issues'
                 }
             }
         }
@@ -70,8 +85,8 @@ publishing {
             def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
-                username = project.hasProperty('ossrhUsername') ? ossrhUsername : ''
-                password = project.hasProperty('ossrhPassword') ? ossrhPassword : ''
+                username = System.getenv('OSSRH_USERNAME') ?: ''
+                password = System.getenv('OSSRH_PASSWORD') ?: ''
             }
         }
     }
