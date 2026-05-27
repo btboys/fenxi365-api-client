@@ -1,7 +1,6 @@
 plugins {
     id 'java-library'
-    id 'maven-publish'
-    id 'signing'
+    id 'com.vanniktech.maven.publish' version '0.30.0'
 }
 
 group = 'com.fenxi365'
@@ -21,8 +20,6 @@ dependencies {
 }
 
 java {
-    withSourcesJar()
-    withJavadocJar()
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
@@ -43,55 +40,38 @@ tasks.named('javadoc') {
     options.addBooleanOption('Xdoclint:none', true)
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            pom {
-                name = 'Fenxi365 API Client'
-                description = 'Java client SDK for Fenxi365 Financial Business System API'
-                url = 'https://github.com/btboys/fenxi365-api-client'
-                inceptionYear = '2026'
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'https://opensource.org/licenses/MIT'
-                        distribution = "repo"
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'btboys'
-                        name = 'btboys'
-                        email = 'geek@gson.cn'
-                        url = 'https://github.com/btboys'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
-                    developerConnection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
-                    url = 'https://github.com/btboys/fenxi365-api-client'
-                }
-                issueManagement {
-                    system = 'GitHub Issues'
-                    url = 'https://github.com/btboys/fenxi365-api-client/issues'
-                }
+mavenPublishing {
+    coordinates('com.fenxi365', 'fenxi365-api-client', '1.0.0')
+    pom {
+        name = 'Fenxi365 API Client'
+        description = 'Java client SDK for Fenxi365 Financial Business System API'
+        url = 'https://github.com/btboys/fenxi365-api-client'
+        inceptionYear = '2026'
+        licenses {
+            license {
+                name = 'MIT License'
+                url = 'https://opensource.org/licenses/MIT'
+                distribution = 'repo'
             }
         }
-    }
-    repositories {
-        maven {
-            def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-            def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            credentials {
-                username = System.getenv('OSSRH_USERNAME') ?: ''
-                password = System.getenv('OSSRH_PASSWORD') ?: ''
+        developers {
+            developer {
+                id = 'btboys'
+                name = 'btboys'
+                email = 'geek@gson.cn'
+                url = 'https://github.com/btboys'
             }
         }
+        scm {
+            connection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
+            developerConnection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
+            url = 'https://github.com/btboys/fenxi365-api-client'
+        }
+        issueManagement {
+            system = 'GitHub Issues'
+            url = 'https://github.com/btboys/fenxi365-api-client/issues'
+        }
     }
-}
-
-signing {
-    sign publishing.publications.mavenJava
+    signAllPublications()
+    publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
 }
