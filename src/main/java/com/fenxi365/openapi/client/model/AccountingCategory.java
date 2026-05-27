@@ -12,27 +12,6 @@ public class AccountingCategory {
     private Boolean systemDefault;
     private Boolean canEdit;
 
-    public static class AssistingAccountingColumn {
-        private String code;
-        private String title;
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-    }
-
     public Long getId() {
         return id;
     }
@@ -87,5 +66,26 @@ public class AccountingCategory {
 
     public void setCanEdit(Boolean canEdit) {
         this.canEdit = canEdit;
+    }
+
+    public static class AssistingAccountingColumn {
+        private String code;
+        private String title;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
     }
 }

@@ -27,7 +27,8 @@ public class EmployeeApi {
         Map<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(page));
         params.put("pageSize", String.valueOf(pageSize));
-        Type resultType = new TypeToken<PageResult<Employee>>() {}.getType();
+        Type resultType = new TypeToken<PageResult<Employee>>() {
+        }.getType();
         return client.get("/employee", params, resultType);
     }
 
@@ -36,6 +37,6 @@ public class EmployeeApi {
     }
 
     public JsonResult<Void> delete(Long employeeId) {
-        return client.delete("/employee/" + employeeId, (Map<String, String>) null, null);
+        return client.delete("/employee/" + employeeId, null, null);
     }
 }

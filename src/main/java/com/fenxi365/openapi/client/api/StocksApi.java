@@ -27,7 +27,8 @@ public class StocksApi {
         Map<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(page));
         params.put("pageSize", String.valueOf(pageSize));
-        Type resultType = new TypeToken<PageResult<Stocks>>() {}.getType();
+        Type resultType = new TypeToken<PageResult<Stocks>>() {
+        }.getType();
         return client.get("/stocks", params, resultType);
     }
 
@@ -36,6 +37,6 @@ public class StocksApi {
     }
 
     public JsonResult<Void> delete(Long stocksId) {
-        return client.delete("/stocks/" + stocksId, (Map<String, String>) null, null);
+        return client.delete("/stocks/" + stocksId, null, null);
     }
 }

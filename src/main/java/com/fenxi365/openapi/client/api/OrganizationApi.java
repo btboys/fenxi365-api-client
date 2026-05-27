@@ -27,7 +27,8 @@ public class OrganizationApi {
         Map<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(page));
         params.put("pageSize", String.valueOf(pageSize));
-        Type resultType = new TypeToken<PageResult<Organization>>() {}.getType();
+        Type resultType = new TypeToken<PageResult<Organization>>() {
+        }.getType();
         return client.get("/organization", params, resultType);
     }
 
@@ -36,6 +37,6 @@ public class OrganizationApi {
     }
 
     public JsonResult<Void> delete(Long organizationId) {
-        return client.delete("/organization/" + organizationId, (Map<String, String>) null, null);
+        return client.delete("/organization/" + organizationId, null, null);
     }
 }

@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
 public class VoucherWordApi {
 
@@ -23,7 +22,8 @@ public class VoucherWordApi {
     }
 
     public JsonResult<List<VoucherWord>> list() {
-        Type resultType = new TypeToken<List<VoucherWord>>() {}.getType();
+        Type resultType = new TypeToken<List<VoucherWord>>() {
+        }.getType();
         return client.get("/voucher-word", null, resultType);
     }
 
@@ -36,6 +36,6 @@ public class VoucherWordApi {
     }
 
     public JsonResult<Void> delete(Long wordId) {
-        return client.delete("/voucher-word/" + wordId, (Map<String, String>) null, null);
+        return client.delete("/voucher-word/" + wordId, null, null);
     }
 }

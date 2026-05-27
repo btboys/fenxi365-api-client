@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
 public class AccountingCategoryApi {
 
@@ -23,7 +22,8 @@ public class AccountingCategoryApi {
     }
 
     public JsonResult<List<AccountingCategory>> list() {
-        Type resultType = new TypeToken<List<AccountingCategory>>() {}.getType();
+        Type resultType = new TypeToken<List<AccountingCategory>>() {
+        }.getType();
         return client.get("/accounting-category", null, resultType);
     }
 
@@ -36,6 +36,6 @@ public class AccountingCategoryApi {
     }
 
     public JsonResult<Void> delete(Long categoryId) {
-        return client.delete("/accounting-category/" + categoryId, (Map<String, String>) null, null);
+        return client.delete("/accounting-category/" + categoryId, null, null);
     }
 }

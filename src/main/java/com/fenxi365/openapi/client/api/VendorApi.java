@@ -27,7 +27,8 @@ public class VendorApi {
         Map<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(page));
         params.put("pageSize", String.valueOf(pageSize));
-        Type resultType = new TypeToken<PageResult<Vendor>>() {}.getType();
+        Type resultType = new TypeToken<PageResult<Vendor>>() {
+        }.getType();
         return client.get("/vendor", params, resultType);
     }
 
@@ -36,6 +37,6 @@ public class VendorApi {
     }
 
     public JsonResult<Void> delete(Long vendorId) {
-        return client.delete("/vendor/" + vendorId, (Map<String, String>) null, null);
+        return client.delete("/vendor/" + vendorId, null, null);
     }
 }

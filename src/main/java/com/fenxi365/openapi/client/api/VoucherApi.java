@@ -24,7 +24,8 @@ public class VoucherApi {
     }
 
     public JsonResult<PageResult<VoucherDto>> list(VoucherQuery query) {
-        Type resultType = new TypeToken<PageResult<VoucherDto>>() {}.getType();
+        Type resultType = new TypeToken<PageResult<VoucherDto>>() {
+        }.getType();
         return client.post("/voucher/list", query, resultType);
     }
 

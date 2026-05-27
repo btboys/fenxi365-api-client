@@ -55,18 +55,59 @@ public class Fenxi365Client {
         apiClient.clearAccountSetId();
     }
 
-    public AccountSetsApi accountSets() { return accountSets; }
-    public SubjectApi subject() { return subject; }
-    public CurrencyApi currency() { return currency; }
-    public VoucherWordApi voucherWord() { return voucherWord; }
-    public AccountingCategoryApi accountingCategory() { return accountingCategory; }
-    public CustomerApi customer() { return customer; }
-    public VendorApi vendor() { return vendor; }
-    public EmployeeApi employee() { return employee; }
-    public DepartmentApi department() { return department; }
-    public OrganizationApi organization() { return organization; }
-    public ProjectApi project() { return project; }
-    public StocksApi stocks() { return stocks; }
-    public VoucherApi voucher() { return voucher; }
-    public TripartiteApi tripartite() { return tripartite; }
+    public AccountSetsApi accountSets() {
+        return accountSets;
+    }
+
+    public SubjectApi subject() {
+        return subject;
+    }
+
+    public CurrencyApi currency() {
+        return currency;
+    }
+
+    public VoucherWordApi voucherWord() {
+        return voucherWord;
+    }
+
+    public AccountingCategoryApi accountingCategory() {
+        return accountingCategory;
+    }
+
+    public CustomerApi customer() {
+        return customer;
+    }
+
+    public VendorApi vendor() {
+        return vendor;
+    }
+
+    public EmployeeApi employee() {
+        return employee;
+    }
+
+    public DepartmentApi department() {
+        return department;
+    }
+
+    public OrganizationApi organization() {
+        return organization;
+    }
+
+    public ProjectApi project() {
+        return project;
+    }
+
+    public StocksApi stocks() {
+        return stocks;
+    }
+
+    public VoucherApi voucher() {
+        return voucher;
+    }
+
+    public TripartiteApi tripartite() {
+        return tripartite;
+    }
 }

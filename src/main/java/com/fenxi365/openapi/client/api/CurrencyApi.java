@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
 public class CurrencyApi {
 
@@ -23,7 +22,8 @@ public class CurrencyApi {
     }
 
     public JsonResult<List<CurrencyDto>> list() {
-        Type resultType = new TypeToken<List<CurrencyDto>>() {}.getType();
+        Type resultType = new TypeToken<List<CurrencyDto>>() {
+        }.getType();
         return client.get("/currency", null, resultType);
     }
 
@@ -32,6 +32,6 @@ public class CurrencyApi {
     }
 
     public JsonResult<Void> delete(Long currencyId) {
-        return client.delete("/currency/" + currencyId, (Map<String, String>) null, null);
+        return client.delete("/currency/" + currencyId, null, null);
     }
 }

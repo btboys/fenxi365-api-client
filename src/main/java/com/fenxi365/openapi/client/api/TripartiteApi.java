@@ -25,7 +25,8 @@ public class TripartiteApi {
     }
 
     public JsonResult<List<TripartiteDefinitionDto>> listDefinitions() {
-        Type resultType = new TypeToken<List<TripartiteDefinitionDto>>() {}.getType();
+        Type resultType = new TypeToken<List<TripartiteDefinitionDto>>() {
+        }.getType();
         return client.get("/tripartite/definition/simple", null, resultType);
     }
 

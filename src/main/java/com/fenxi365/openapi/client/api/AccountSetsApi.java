@@ -29,7 +29,8 @@ public class AccountSetsApi {
         params.put("page", String.valueOf(page));
         params.put("pageSize", String.valueOf(pageSize));
         if (showStop != null) params.put("showStop", showStop.toString());
-        Type resultType = new TypeToken<PageResult<AccountSetsDto>>() {}.getType();
+        Type resultType = new TypeToken<PageResult<AccountSetsDto>>() {
+        }.getType();
         return client.get("/account-sets", params, resultType);
     }
 

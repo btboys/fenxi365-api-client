@@ -4,10 +4,6 @@ import java.time.LocalDate;
 
 public class Employee extends AcDetails {
 
-    public enum Gender {
-        MALE, FEMALE
-    }
-
     private Gender gender;
     private Long departmentId;
     private String departmentName;
@@ -178,5 +174,9 @@ public class Employee extends AcDetails {
 
     public void setPayslipPwdChanged(Boolean payslipPwdChanged) {
         this.payslipPwdChanged = payslipPwdChanged;
+    }
+
+    public enum Gender {
+        MALE, FEMALE
     }
 }

@@ -1,8 +1,8 @@
 package com.fenxi365.openapi.client;
 
+import com.fenxi365.openapi.client.model.JsonResult;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.fenxi365.openapi.client.model.JsonResult;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -64,6 +64,28 @@ public class ApiClient {
                 .create();
     }
 
+    private static String normalizeBaseUrl(String url) {
+        if (url == null || url.isEmpty()) {
+            throw new IllegalArgumentException("baseUrl must not be empty");
+        }
+        String normalized = url;
+        if (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
+    }
+
+    private static String normalizePrefix(String prefix) {
+        if (prefix == null || prefix.isEmpty()) {
+            return "";
+        }
+        String p = prefix.startsWith("/") ? prefix : "/" + prefix;
+        if (p.endsWith("/")) {
+            p = p.substring(0, p.length() - 1);
+        }
+        return p;
+    }
+
     public void withAccountSetId(Long accountSetId) {
         if (accountSetId != null) {
             pendingHolder.set(accountSetId);
@@ -92,28 +114,6 @@ public class ApiClient {
         if (id != null) {
             builder.addHeader(HEADER_ACCOUNT_SET_ID, id.toString());
         }
-    }
-
-    private static String normalizeBaseUrl(String url) {
-        if (url == null || url.isEmpty()) {
-            throw new IllegalArgumentException("baseUrl must not be empty");
-        }
-        String normalized = url;
-        if (normalized.endsWith("/")) {
-            normalized = normalized.substring(0, normalized.length() - 1);
-        }
-        return normalized;
-    }
-
-    private static String normalizePrefix(String prefix) {
-        if (prefix == null || prefix.isEmpty()) {
-            return "";
-        }
-        String p = prefix.startsWith("/") ? prefix : "/" + prefix;
-        if (p.endsWith("/")) {
-            p = p.substring(0, p.length() - 1);
-        }
-        return p;
     }
 
     private String buildPath(String path) {
@@ -204,7 +204,8 @@ public class ApiClient {
             if (!response.isSuccessful()) {
                 throw new ApiException(response.code(), "HTTP " + response.code() + ": " + response.message());
             }
-            JsonResult<T> result = gson.fromJson(responseBody, new TypeToken<JsonResult<T>>(){}.getType());
+            JsonResult<T> result = gson.fromJson(responseBody, new TypeToken<JsonResult<T>>() {
+            }.getType());
             if (result.getData() != null && resultType != null) {
                 JsonElement element = gson.fromJson(responseBody, JsonElement.class);
                 JsonElement dataElement = element.getAsJsonObject().get("data");
