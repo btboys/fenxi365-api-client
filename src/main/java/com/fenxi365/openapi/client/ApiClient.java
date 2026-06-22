@@ -2,7 +2,6 @@ package com.fenxi365.openapi.client;
 
 import com.fenxi365.openapi.client.model.JsonResult;
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -204,15 +203,19 @@ public class ApiClient {
             if (!response.isSuccessful()) {
                 throw new ApiException(response.code(), "HTTP " + response.code() + ": " + response.message());
             }
-            JsonResult<T> result = gson.fromJson(responseBody, new TypeToken<JsonResult<T>>() {
-            }.getType());
-            if (result.getData() != null && resultType != null) {
-                JsonElement element = gson.fromJson(responseBody, JsonElement.class);
-                JsonElement dataElement = element.getAsJsonObject().get("data");
-                if (dataElement != null && !dataElement.isJsonNull()) {
-                    T data = gson.fromJson(dataElement, resultType);
-                    result.setData(data);
-                }
+            // 先解析为 JsonElement 避免 TypeToken 在泛型方法中捕获类型变量的问题
+            JsonElement jsonElement = gson.fromJson(responseBody, JsonElement.class);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonResult<T> result = new JsonResult<>();
+            result.setSuccess(jsonObject.get("success") != null && jsonObject.get("success").getAsBoolean());
+            result.setCode(jsonObject.has("code") ? jsonObject.get("code").getAsInt() : 200);
+            result.setMsg(jsonObject.has("msg") && !jsonObject.get("msg").isJsonNull()
+                    ? jsonObject.get("msg").getAsString() : "");
+            // 解析 data 字段
+            JsonElement dataElement = jsonObject.get("data");
+            if (dataElement != null && !dataElement.isJsonNull() && resultType != null) {
+                T data = gson.fromJson(dataElement, resultType);
+                result.setData(data);
             }
             return result;
         } catch (JsonSyntaxException e) {
