@@ -1,10 +1,12 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     id 'java-library'
     id 'com.vanniktech.maven.publish' version '0.30.0'
 }
 
 group = 'com.fenxi365'
-version = '1.0.1'
+version = '1.0.2'
 
 repositories {
     mavenCentral()
@@ -41,9 +43,9 @@ tasks.named('javadoc') {
 }
 
 mavenPublishing {
-    coordinates('com.fenxi365', 'fenxi365-api-client', '1.0.1')
+    coordinates('com.fenxi365', 'fenxi365-api-client', '1.0.2')
     pom {
-        name = 'Fenxi365 API Client'
+        name = 'fenxi365-api-client'
         description = 'Java client SDK for Fenxi365 Financial Business System API'
         url = 'https://github.com/btboys/fenxi365-api-client'
         inceptionYear = '2026'
@@ -56,11 +58,14 @@ mavenPublishing {
         }
         developers {
             developer {
-                id = 'btboys'
-                name = 'btboys'
+                id = 'fenxi365'
+                name = '纷析云（杭州）科技有限公司'
                 email = 'geek@gson.cn'
                 url = 'https://github.com/btboys'
             }
+        }
+        organization {
+            name = '纷析云（杭州）科技有限公司'
         }
         scm {
             connection = 'scm:git:https://github.com/btboys/fenxi365-api-client.git'
@@ -73,5 +78,5 @@ mavenPublishing {
         }
     }
     signAllPublications()
-    publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
 }

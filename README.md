@@ -85,31 +85,3 @@ client.tripartite().withAccountSetId(123L).batchPush("SALE_ORDER", dataList, "BA
 ```bash
 ./gradlew build
 ```
-
-## 发布到 Maven Central
-
-### 前提
-
-1. 注册 [central.sonatype.com](https://central.sonatype.com)
-2. 验证 `com.fenxi365` 命名空间所有权
-3. 生成 Deployment Token
-
-### 发布
-
-```bash
-export MAVEN_USERNAME=your-token-username
-export MAVEN_PASSWORD=your-token-password
-# GPG 签名配置（二选一）
-
-# 方式一：本地 keyring 文件
-export ORG_GRADLE_PROJECT_signingKeyId=your-key-id
-export ORG_GRADLE_PROJECT_signingPassword=your-passphrase
-export ORG_GRADLE_PROJECT_signingSecretKeyRingFile=/path/to/secring.gpg
-
-# 方式二：环境变量（CI 友好）
-export GPG_KEY_ID=your-key-id
-export GPG_PRIVATE_KEY="$(cat /path/to/private-key.asc)"
-export GPG_PASSPHRASE=your-passphrase
-
-./gradlew publishAllPublicationsToMavenCentralRepository
-```
